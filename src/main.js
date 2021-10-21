@@ -1,6 +1,6 @@
 import { saveAs } from 'file-saver';
 
-window.onload = () => {
+function main() {
 	const button = document.getElementById("btnPdf");
 	const worker = new Worker("worker.js");
 	const progess = document.getElementById("progress");
@@ -39,3 +39,17 @@ window.onload = () => {
 		}
 	});
 };
+if (!("Worker" in window)) {
+	document.body.innerHTML = (`
+	<div class="parent"><div class="center">
+	<h1>Browser not supported</h1>
+	<p>
+	Please open this page in a more recent browser,
+	such as the latest version of chrome or firefox.
+	</p>
+	</div></div>
+`);
+}
+else {
+	window.onload = main;
+}
