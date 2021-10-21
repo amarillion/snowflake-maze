@@ -6,11 +6,12 @@ const resolve = dir => path.join(__dirname, dir);
 
 const config = {
 	// where webpack starts to build the bundle. All other deps are imported from here.
-	entry: "./src/main.js",
-
-	// how and where outputs and assets should be put.
+	entry: {
+		main: "./src/main.js", 
+		worker: "./src/worker.js" 
+	},
 	output: {
-		filename: '[name].[hash].js',
+		filename: '[name].js',
 		path: resolve("dist")
 	},
 
@@ -21,10 +22,17 @@ const config = {
 			template: "./src/index.html",
 			filename: "index.html", //relative to root of the application
 		}),
-		new CopyWebpackPlugin({ patterns: [
-			{ from: "assets", to: "assets" },
-		]}),
+		new webpack.ProvidePlugin({
+			process: 'process/browser',
+		}),
 	],
+
+	resolve: {
+		fallback: {
+			"stream": require.resolve("stream-browserify"),
+			"util": require.resolve("util/"),
+		},
+	},
 
 	devServer: {
 		/** following two lines allow (less-secure) access from the Local network. */

@@ -5,10 +5,87 @@
 	<meta name="viewport"
 		  content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
 	<title>Snowflake maze pdf generator</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet"> 
+	<style>
+		body {
+			background: blue;
+			font-family: 'Indie Flower', cursive;
+			font-size: 20pt;
+		}
+		#form {
+			display: grid;
+			grid-template-columns: auto auto;
+			column-gap: 1rem;
+			justify-content: center;
+			margin: 2rem;
+		}
+		#btnPdf {
+			background: #084679;
+			color: #fff;
+			padding: 1rem;
+			text-align: center;
+			border: 1px solid black;
+			width: 100%;
+		}
+		#btnPdf:hover {
+			background: #0a75cc;
+		}
+		#btnPdf:active {
+			background: #042a49;
+		}
+		#overlay {
+			background: #666;
+			z-index: 1000;
+		}
+		#overlay[hidden] {
+			display: none;
+		}
+		.parent {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: fixed;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+		}
+		.center {
+			padding: 2rem;
+			background: white;
+		}
+	</style>
 </head>
 <body>
-	<input group="grpPaper" type="radio" value="A4">A4</input>
-	<input group="grpPaper" type="radio" value="LETTER">US Letter</input>
-	<button id="btnPdf">Create PDF</button>
+	<div class="parent">
+		<div class="center">
+			<h1>Print your unique ❄snowflake❄ maze!</h1>
+
+			
+			<div id="form">
+				<label for="inputA4">A4</label>
+				<input id="inputA4" name="paperGroup" type="radio" value="A4" checked></input>
+				<label for="inputLetter">US Letter</label>
+				<input id="inputLetter" name="paperGroup" type="radio" value="LETTER"></input>
+			</div>
+
+			<button id="btnPdf">Create PDF</button>
+
+			<p>
+				Happy holidays from Martijn🎅, Olivia🤶, Alis🐇 &amp; Boterham🐇!
+				<br>
+				Curious how it's made? Read some 
+				<a href="https://github.com/amarillion/snowflake-maze">technical info...</a>
+			</p>
+		</div>
+	</div>
+	<div id="overlay" class="parent" hidden="true">
+		<div class="center">
+			<p>Generating maze...</p><br>
+			<progress id="progress"></progress>
+		</div>
+	</div>
 </body>
 </html>

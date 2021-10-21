@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import PDFDocument from "pdfkit";
-import { MazeMaker } from "./common.js";
+import PDFDocument from "pdfkit/js/pdfkit.standalone.js";
+import { MazeMaker } from "./mazeMaker.js";
 
 // coordinate unit is points (See: https://stackoverflow.com/questions/51540144/pdfkit-node-js-measurement-unit)
 const CONFIGURATIONS = {
@@ -17,7 +17,7 @@ const CONFIGURATIONS = {
 	}
 };
 
-export function makePdf(paperSizeKey, pipe) {
+export function makePdf(paperSizeKey, pipe, progressCallback = () => {}) {
 
 	const { width: paperWidth, height: paperHeight, paper: paperSize } = CONFIGURATIONS[paperSizeKey];
 	
@@ -25,14 +25,7 @@ export function makePdf(paperSizeKey, pipe) {
 	const doc = new PDFDocument({size: paperSize});
 
 	// Pipe its output somewhere, like to a file or HTTP response
-	// See below for browser usage
-	doc.pipe(pipe);
-
-	// Embed a font, set the font size, and render some text
-	// doc
-	// 	.font("fonts/Roboto-Regular.ttf")
-	// 	.fontSize(25)
-	// 	.text("Some text with an embedded font!", 100, 100);
+	const stream = doc.pipe(pipe);
 
 	// Not sure what this call is for?
 	doc.save();
@@ -43,7 +36,9 @@ export function makePdf(paperSizeKey, pipe) {
 	let first = true;
 	const sizes = [8, 12, 16, 24];
 
-	for (let i = 0; i < 4; ++i) {
+	const NUM_PAGES = 4;
+	for (let i = 0; i < NUM_PAGES; ++i) {
+		progressCallback(i, NUM_PAGES);
 		if (first) {
 			first = false;
 		}
@@ -57,25 +52,11 @@ export function makePdf(paperSizeKey, pipe) {
 		maker.run();
 		maker.openCorners();
 		maker.render(doc);
-
 	}
-
-	// Apply some transforms and render an SVG path with the "even-odd" fill rule
-	// doc
-	// 	.scale(0.6)
-	// 	.translate(470, -380)
-	// 	.path("M 250,75 L 323,301 131,161 369,161 177,301 z")
-	// 	.fill("red", "even-odd")
-	// 	.restore();
-
-	// Add some text with annotations
-	// doc
-	// 	.addPage()
-	// 	.fillColor("blue")
-	// 	.text("Here is a link!", 100, 100)
-	// 	.underline(100, 100, 160, 27, { color: "#0000FF" })
-	// 	.link(100, 100, 160, 27, "http://google.com/");
+	progressCallback(NUM_PAGES, NUM_PAGES);
 
 	// Finalize PDF file
 	doc.end();
+
+	return stream;
 }

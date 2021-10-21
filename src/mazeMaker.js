@@ -1,6 +1,6 @@
-import { randomInt } from "../../lib/random.js";
-import { prim } from "../../lib/prim.js";
-import BaseGrid from "../../lib/BaseGrid.js";
+import { randomInt } from "@amarillion/helixgraph/lib/random.js";
+import { prim, PRIM_LAST_ADDED } from "@amarillion/helixgraph";
+import BaseGrid from "@amarillion/helixgraph/lib/BaseGrid.js";
 
 const NE = "NE", N = "N", NW = "NW", SE = "SE", S = "S", SW = "SW"; 
 
@@ -342,8 +342,11 @@ export class MazeMaker {
 		prim(
 			this.grid.randomCell(), // start cell
 			n => n.neighborFunc(), 
-			linkCells,
-			{ getWeight: myWeightFunc });
+			linkCells, { 
+				getWeight: myWeightFunc,
+				tiebreaker: PRIM_LAST_ADDED 
+			}
+		);
 	
 	}
 
