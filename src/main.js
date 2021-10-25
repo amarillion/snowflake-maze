@@ -1,4 +1,20 @@
 import { saveAs } from 'file-saver';
+import { MazeMaker } from './mazeMaker.js';
+
+function refreshBg() {	
+	const bodyWidth = document.body.clientWidth;
+	const bodyHeight = document.body.clientHeight;
+	console.log({ bodyWidth, bodyHeight });
+
+	const canvas = document.getElementById("myCanvas");
+	canvas.setAttribute("width", bodyWidth);
+	canvas.setAttribute("height", bodyHeight);
+
+	const maker = new MazeMaker(24, bodyWidth, bodyHeight, 0, 0);
+	maker.run();		
+	const ctx = canvas.getContext("2d");
+	maker.render(ctx);
+}
 
 function main() {
 	const button = document.getElementById("btnPdf");
@@ -38,7 +54,11 @@ function main() {
 			progress.setAttribute('value', count);
 		}
 	});
+
+	refreshBg();
+	window.onresize = () => refreshBg();
 };
+
 if (!("Worker" in window)) {
 	document.body.innerHTML = (`
 	<div class="parent"><div class="center">

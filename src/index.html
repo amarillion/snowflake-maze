@@ -12,7 +12,14 @@
 		body {
 			background: blue;
 			font-family: 'Indie Flower', cursive;
-			font-size: 20pt;
+			height: 100vh;
+			margin: 0px;
+			overflow: hidden;
+		}
+		@media (min-width: 1024px) {
+			body {
+				font-size: x-large;
+			}
 		}
 		#form {
 			display: grid;
@@ -59,6 +66,7 @@
 	</style>
 </head>
 <body>
+	<canvas id="myCanvas" class="parent"></canvas>
 	<div class="parent">
 		<div class="center">
 			<h1>Print your unique ❄snowflake❄ maze!</h1>
