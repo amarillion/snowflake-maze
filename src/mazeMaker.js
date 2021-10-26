@@ -110,6 +110,7 @@ class TriangularCell {
 			const ny = this.y + dy;
 			if (!this.grid.inRange(nx, ny)) continue;
 			const cell = this.grid.get(nx, ny);
+			if (!cell) continue;
 			yield [key, cell];
 		}
 	}
@@ -166,6 +167,8 @@ class TriangularCell {
 }
 
 function snowflake(start, neighborFunc, linkCells, size, color) {
+
+	if (!start) return;
 
 	const directionSteps = [
 		[ NE, N ],
@@ -280,7 +283,7 @@ export class MazeMaker {
 	constructor(triangleSize, width, height, xofst, yofst) {
 		const layout = new TriangleInfo(triangleSize, xofst, yofst);
 		const cellFactory = (x, y, grid) => new TriangularCell(x, y, grid, layout);
-		
+		console.log({layout});
 		this.grid = new BaseGrid(
 			Math.floor(width / layout.A) - 2, 
 			Math.floor(height / layout.B), 
@@ -293,6 +296,14 @@ export class MazeMaker {
 		this.grid.get(1,0).links[N] = 1;
 		const extra = (this.grid.width + this.grid.height) % 2;
 		this.grid.get(this.grid.width - extra - 1, this.grid.height -1).links[S] = 1;
+	}
+
+	clearCenter(x, y, w, h) {
+		for (let yy = y; yy < y + h; ++yy) {		
+			for (let xx = x; xx < x + w; ++xx) {
+				this.grid.remove(xx, yy);
+			}
+		}
 	}
 
 	run() {
