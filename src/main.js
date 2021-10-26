@@ -4,13 +4,12 @@ import { MazeMaker } from './mazeMaker.js';
 function refreshBg() {	
 	const bodyWidth = document.body.clientWidth;
 	const bodyHeight = document.body.clientHeight;
-	console.log({ bodyWidth, bodyHeight });
 
 	const canvas = document.getElementById("myCanvas");
 	canvas.setAttribute("width", bodyWidth);
 	canvas.setAttribute("height", bodyHeight);
 
-	const maker = new MazeMaker(24, bodyWidth, bodyHeight, 0, 0);
+	const maker = new MazeMaker(24, bodyWidth - 20, bodyHeight - 20, 10, 10);
 	maker.run();		
 	const ctx = canvas.getContext("2d");
 	maker.render(ctx, "white");
@@ -40,7 +39,6 @@ function main() {
 	};
 
 	worker.addEventListener("message", function(event) {
-		console.log(event.data);
 		if ('result' in event.data) {
 			saveAs(event.data.result, `snowflake-maze-${paperSize}.pdf`)
 			setTimeout(() => {
