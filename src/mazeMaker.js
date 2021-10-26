@@ -145,9 +145,9 @@ class TriangularCell {
 		ctx.fill();
 	}
 
-	render(ctx) {
+	render(ctx, strokeStyle = "black") {
 		ctx.lineWidth = 1.0;
-		ctx.strokeStyle = "black";
+		ctx.strokeStyle = strokeStyle;
 		// ctx.lineCap = "round";
 		for (const dir in this.dirs) {
 			if (this.linked(dir)) continue;
@@ -350,9 +350,9 @@ export class MazeMaker {
 	
 	}
 
-	render(ctx) {
+	render(ctx, strokeStyle = "black") {
 		for (const n of this.grid.eachNode()) {
-			n.render(ctx);
+			n.render(ctx, strokeStyle);
 		}
 
 	}

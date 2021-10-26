@@ -13,7 +13,7 @@ function refreshBg() {
 	const maker = new MazeMaker(24, bodyWidth, bodyHeight, 0, 0);
 	maker.run();		
 	const ctx = canvas.getContext("2d");
-	maker.render(ctx);
+	maker.render(ctx, "white");
 }
 
 function main() {
