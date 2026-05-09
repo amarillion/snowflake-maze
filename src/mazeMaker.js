@@ -283,7 +283,6 @@ export class MazeMaker {
 	constructor(triangleSize, width, height, xofst, yofst) {
 		const layout = new TriangleInfo(triangleSize, xofst, yofst);
 		const cellFactory = (x, y, grid) => new TriangularCell(x, y, grid, layout);
-		console.log({layout});
 		this.grid = new BaseGrid(
 			Math.floor(width / layout.A) - 2, 
 			Math.floor(height / layout.B), 

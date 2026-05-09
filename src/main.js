@@ -5,6 +5,10 @@ function refreshBg() {
 	const bodyWidth = document.body.clientWidth;
 	const bodyHeight = document.body.clientHeight;
 
+	if (bodyWidth * bodyHeight == 0) {
+		return;
+	}
+
 	const canvas = document.getElementById("myCanvas");
 	canvas.setAttribute("width", bodyWidth);
 	canvas.setAttribute("height", bodyHeight);
