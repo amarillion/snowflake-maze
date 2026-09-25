@@ -1,5 +1,9 @@
 # Snowflake maze generator
 
+Watch it online here:
+
+[amarillion.github.io/snowflake-maze](https://amarillion.github.io/snowflake-maze)
+
 ## What is it for? ##
 
 Just a nice creative coding exercise in the spirit of christmas! Made by [@mpvaniersel](https://twitter.com/mpvaniersel)
